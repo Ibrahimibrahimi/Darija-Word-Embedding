@@ -16,8 +16,8 @@ This project applies the **Word2Vec architecture** to **Moroccan Darija** (Moroc
 Built as a **practice project during my Data Science studies**, the goal is to train word embeddings that capture semantic relationships in Darija and use them for **word completion tasks**.
 
 ⚠️ **Work in Progress**  
-This project is still under development. Some features may be incomplete and the project structure may change in future updates.
-
+1. This project is still under development. Some features may be incomplete and the project structure may change in future updates.
+2. To execute  the code , use `run.py`
 ---
 
 ## Features
@@ -32,7 +32,7 @@ This project is still under development. Some features may be incomplete and the
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.10+
 - pip
 
 ### Install dependencies
@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ### Train the model
 
 ```bash
-python train.py
+python run.py
 ```
 
 ### Run word completion
