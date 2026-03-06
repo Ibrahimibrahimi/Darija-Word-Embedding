@@ -11,10 +11,10 @@ Usage:
 import argparse
 import os
 
-from preprocess  import load_corpus
-from train       import train
-from evaluate    import load_vectors, most_similar, word_similarity, doesnt_match
-from visualize   import plot_tsne
+from preprocess import load_corpus
+from train import train
+from evaluate import load_vectors, most_similar, word_similarity, doesnt_match
+from visualize import plot_tsne
 
 
 def main(corpus_path: str, skip_viz: bool = False):
@@ -25,14 +25,14 @@ def main(corpus_path: str, skip_viz: bool = False):
 
     # ── Step 1: Train ────────────────────────────────────────────
     model = train(
-        corpus_path = corpus_path,
-        model_dir   = "models",
-        vector_size = 150,
-        window      = 5,
-        min_count   = 3,
-        sg          = 1,       # Skip-gram
-        negative    = 10,
-        epochs      = 20,
+        corpus_path=corpus_path,
+        model_dir="models",
+        vector_size=150,
+        window=5,
+        min_count=3,
+        sg=1,       # Skip-gram
+        negative=10,
+        epochs=20,
     )
 
     wv = model.wv
@@ -48,14 +48,6 @@ def main(corpus_path: str, skip_viz: bool = False):
         demo = demo_words[min(3, len(demo_words) - 1)]
         most_similar(wv, demo, topn=8)
 
-    # ── Step 3: Visualize ─────────────────────────────────────────
-    if not skip_viz:
-        print("\n" + "─" * 40)
-        print(" Step 3: Visualization")
-        print("─" * 40)
-        os.makedirs("outputs", exist_ok=True)
-        plot_tsne(wv, topn=min(150, len(wv)), out_path="outputs/tsne_arabic.png")
-
     print("\n" + "═" * 55)
     print("    Pipeline complete!")
     print(f"    Model   → models/arabic_word2vec.model")
@@ -63,12 +55,19 @@ def main(corpus_path: str, skip_viz: bool = False):
     if not skip_viz:
         print(f"    Plot    → outputs/tsne_arabic.png")
     print("═" * 55 + "\n")
-    print(most_similar(wv, input("Word : ")))
-
-
+    while True :
+        w = most_similar(wv, input("Word : "))
+        if w is None :
+            print("!! DOESN'T EXISTS")
+        else :
+            print(w)
+        if input("Continue ? y/n") == "n":
+            break
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus",    type=str, default="data/corpus.txt")
-    parser.add_argument("--skip_viz",  action="store_true", help="Skip t-SNE visualization")
+    parser.add_argument("--skip_viz",  action="store_true",
+                        help="Skip t-SNE visualization")
     args = parser.parse_args()
     main(corpus_path=args.corpus, skip_viz=args.skip_viz)
