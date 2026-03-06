@@ -27,12 +27,12 @@ def main(corpus_path: str, skip_viz: bool = False):
     model = train(
         corpus_path=corpus_path,
         model_dir="models",
-        vector_size=150,
-        window=5,
-        min_count=3,
+        vector_size=300,
+        window=10,
+        min_count=5,
         sg=1,       # Skip-gram
         negative=10,
-        epochs=20,
+        epochs=30,
     )
 
     wv = model.wv
@@ -55,15 +55,8 @@ def main(corpus_path: str, skip_viz: bool = False):
     if not skip_viz:
         print(f"    Plot    → outputs/tsne_arabic.png")
     print("═" * 55 + "\n")
-    while True :
-        w = most_similar(wv, input("Word : "))
-        if w is None :
-            print("!! DOESN'T EXISTS")
-        else :
-            print(w)
-        if input("Continue ? y/n") == "n":
-            break
-    
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus",    type=str, default="data/corpus.txt")
