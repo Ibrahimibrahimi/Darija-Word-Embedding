@@ -1,20 +1,13 @@
-# RUN THIS FILE
+from model import train, embed_dataset, predict_next_word
 
-from model import train , test, evaluate , model
+# Step 1: Train the model on the dataset.
+train()
 
+# Step 2: Save all sentence vectors to data/embedding.csv.
+embed_dataset()
 
-# model = Model()
+# Step 3: Predict next words for a sentence.
+results = predict_next_word("ana machi", length=5)
 
-# train
-
-
-
-# evaluate
-
-
-
-# test
-
-
-
-# result
+for word, score in results:
+    print(f"{word:<20} {score:.4f}")
