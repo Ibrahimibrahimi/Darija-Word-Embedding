@@ -1,102 +1,67 @@
-# Word2Vec in Moroccan Dialect
+# Arabic Word2Vec Project
 
-![Status](https://img.shields.io/badge/status-work%20in%20progress-yellow)
-![Python](https://img.shields.io/badge/python-3.8%2B-blue)
-![PyTorch](https://img.shields.io/badge/framework-PyTorch-ee4c2c)
-![NLP](https://img.shields.io/badge/domain-NLP-green)
-
-> A Word2Vec implementation for Moroccan Darija that enables basic word completion using a custom-trained model built with Python and PyTorch.
-
----
-
-## About
-
-This project applies the **Word2Vec architecture** to **Moroccan Darija** (Moroccan Arabic dialect), a low-resource language with very limited NLP tooling.
-
-Built as a **practice project during my Data Science studies**, the goal is to train word embeddings that capture semantic relationships in Darija and use them for **word completion tasks**.
-
-⚠️ **Work in Progress**  
-1. This project is still under development. Some features may be incomplete and the project structure may change in future updates.
-2. To execute  the code , use `run.py`
----
-
-## Features
-
-- Word2Vec model trained on Moroccan Darija text
-- Word completion based on learned embeddings
-- Built from scratch using PyTorch
-
----
-
-## Installation & Usage
-
-### Prerequisites
-
-- Python 3.10+
-- pip
-
-### Install dependencies
-
-```bash
-git clone https://github.com/Ibrahimibrahimi/word2vec-moroccan-dialect.git
-cd word2vec-moroccan-dialect
-pip install -r requirements.txt
-```
-
-### Train the model
-
-```bash
-python run.py
-```
-
-### Run word completion
-
-```bash
-python predict.py --word "your_input_word"
-```
-
----
+Train a Word2Vec model on Arabic text with full preprocessing.
 
 ## Project Structure
 
-This is the planned structure of the project:
-
 ```
-word2vec-moroccan-dialect/
+arabic_word2vec/
 │
-├── data/               # Training corpus
-├── model/              # Saved model weights
-├── train.py            # Training script
-├── predict.py          # Word completion inference
-├── requirements.txt
-└── README.md
+├── data/
+│   └── corpus.txt          ← PUT YOUR ARABIC CORPUS HERE (one sentence per line)
+│
+├── models/                 ← Auto-created after training
+│   ├── arabic_word2vec.model
+│   └── arabic_vectors.kv
+│
+├── outputs/                ← Auto-created after visualization
+│   └── tsne_arabic.png
+│
+├── preprocess.py           ← Arabic normalization & tokenization
+├── train.py                ← Word2Vec training
+├── evaluate.py             ← Query & evaluate the model
+├── visualize.py            ← t-SNE plot
+├── run_pipeline.py         ← Run everything at once
+└── requirements.txt
 ```
 
----
+## Setup
 
-## Built With
+```bash
+pip install -r requirements.txt
+```
 
-- [Python](https://www.python.org/)
-- [PyTorch](https://pytorch.org/)
+## Usage
 
----
+### Option A — Run full pipeline
+```bash
+# train model from corpus to word embeddings
+python run_pipeline.py --corpus data/corpus.txt
+```
 
-## Roadmap
+### Option B — Step by step
+```bash
+# 1. Train
+python train.py --corpus data/corpus.txt --sg 1 --epochs 20
 
-- [ ] Collect and clean a larger Darija corpus
-- [ ] Improve tokenization for Darija-specific patterns
-- [ ] Add evaluation metrics (similarity and analogy tasks)
-- [ ] Build a simple demo interface
+# 2. Evaluate
+python evaluate.py --vectors models/arabic_vectors.kv --word كتاب
 
----
+# 3. Visualize
+python visualize.py --vectors models/arabic_vectors.kv --topn 150
+```
 
-## Author
+## Corpus Format
 
-**Ibrahim Id-Wahman**  
-Data Science enthusiast exploring NLP and deep learning through hands-on projects.
+Plain `.txt` file, UTF-8 encoded, **one Arabic sentence per line**:
 
-- GitHub: https://github.com/Ibrahimibrahimi
 
----
+## Key Parameters
 
-*This project currently has no license. All rights reserved.*
+| Parameter | Default | Notes |
+|-----------|---------|-------|
+| `vector_size` | 150 | Increase to 200-300 for large corpus |
+| `window` | 5 | Context window around each word |
+| `min_count` | 3 | Ignore rare words |
+| `sg` | 1 | 1=Skip-gram (recommended for Arabic) |
+| `epochs` | 20 | More epochs = better quality |
