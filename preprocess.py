@@ -20,9 +20,9 @@ except ImportError:
 DIACRITICS_PATTERN = re.compile(
     r"[\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED]"
 )
-TATWEEL_PATTERN    = re.compile(r"\u0640")          # ـ
+TATWEEL_PATTERN = re.compile(r"\u0640")          # ـ
 NON_ARABIC_PATTERN = re.compile(r"[^\u0600-\u06FF\s]")
-MULTI_SPACE        = re.compile(r"\s+")
+MULTI_SPACE = re.compile(r"\s+")
 
 
 def strip_diacritics(text: str) -> str:
@@ -106,7 +106,8 @@ def load_corpus(filepath: str, min_sentence_len: int = 3) -> list[list[str]]:
 
             sentences.append(tokens)
 
-    print(f"[preprocess] Loaded {len(sentences):,} sentences from '{filepath}'")
+    print(
+        f"[preprocess] Loaded {len(sentences):,} sentences from '{filepath}'")
     print(f"[preprocess] Total tokens: {sum(len(s) for s in sentences):,}")
     return sentences
 
