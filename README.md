@@ -65,3 +65,4 @@ Plain `.txt` file, UTF-8 encoded, **one Arabic sentence per line**:
 | `min_count` | 3 | Ignore rare words |
 | `sg` | 1 | 1=Skip-gram (recommended for Arabic) |
 | `epochs` | 20 | More epochs = better quality |
+ بالساهل

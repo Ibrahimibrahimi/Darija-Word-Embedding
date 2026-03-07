@@ -63,6 +63,7 @@ def main(corpus_path: str, skip_viz: bool = False):
     if not skip_viz:
         print(f"    Plot    → outputs/tsne_arabic.png")
     print("═" * 55 + "\n")
+    print(most_similar(wv, input("Word : ")))
 
 
 if __name__ == "__main__":
@@ -70,5 +71,4 @@ if __name__ == "__main__":
     parser.add_argument("--corpus",    type=str, default="data/corpus.txt")
     parser.add_argument("--skip_viz",  action="store_true", help="Skip t-SNE visualization")
     args = parser.parse_args()
-
     main(corpus_path=args.corpus, skip_viz=args.skip_viz)
