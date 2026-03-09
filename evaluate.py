@@ -57,17 +57,16 @@ def word_similarity(wv: KeyedVectors, word1: str, word2: str) -> None:
         print(f"  [!] One or both words not in vocabulary.")
         return
     score = wv.similarity(word1, word2)
-    print(f"\n التشابه بين '{word1}' و '{word2}': {score:.4f}")
-
+    print(f"Similarity between {word1} and {word2} is : {score:.4f}")
 
 def doesnt_match(wv: KeyedVectors, words: list[str]) -> None:
-    """Find the odd word out from a list."""
+    """Find the odd word that doesn't match in a given list"""
     in_vocab = [w for w in words if w in wv]
     if len(in_vocab) < 2:
         print("  [!] Not enough words in vocabulary.")
         return
     odd = wv.doesnt_match(in_vocab)
-    print(f"\n الكلمة الغريبة في {in_vocab}: '{odd}'")
+    print(f"The weird word in {in_vocab} is => {odd}")
 
 
 def run_demo(wv: KeyedVectors) -> None:
@@ -80,14 +79,14 @@ def run_demo(wv: KeyedVectors) -> None:
     demo_words = list(wv.index_to_key)
     demo_word = demo_words[3] if len(demo_words) > 3 else demo_words[0]
 
-    # 1. Most similar
+    #  Most similar
     most_similar(wv, demo_word, topn=8)
 
-    # 2. Vocabulary stats
-    print(f"\n إحصائيات المفردات:")
-    print(f"  عدد الكلمات  : {len(wv):,}")
-    print(f"  حجم المتجه   : {wv.vector_size}")
-    print(f"  أكثر 10 كلمات تكراراً:")
+    # Vocabulary stats
+    print("Vocabulary stats")
+    print(f"Word count : {len(wv):,}")
+    print(f"Vector size : {wv.vector_size}")
+    print("Top repeated word")
     for w in demo_words[:10]:
         print(f"    - {w}")
 
