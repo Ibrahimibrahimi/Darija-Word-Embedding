@@ -1,4 +1,3 @@
-# Arabic Word2Vec — Python Dependencies
 # Install with: pip install -r requirements.txt
 
 gensim>=4.3.0          # Word2Vec model
