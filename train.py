@@ -80,7 +80,7 @@ def train(
     model.save(model_path)
     model.wv.save(vectors_path)
 
-    print(f"\n[train] ✓ Training complete!")
+    print(f"\n[train] : Training complete!")
     print(f"        Vocabulary size : {len(model.wv):,} words")
     print(f"        Model saved     : {model_path}")
     print(f"        Vectors saved   : {vectors_path}")
