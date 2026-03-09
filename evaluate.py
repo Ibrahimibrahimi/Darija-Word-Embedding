@@ -13,23 +13,24 @@ from gensim.models import KeyedVectors
 
 
 def load_vectors(vectors_path: str) -> KeyedVectors:
-    """Load saved word vectors."""
     wv = KeyedVectors.load(vectors_path)
-    print(f"[evaluate] Loaded vectors: {len(wv):,} words | dim={wv.vector_size}")
+    print(
+        f"[evaluate] Loaded vectors: {len(wv):,} words | dim={wv.vector_size}")
     return wv
 
 
 def most_similar(wv: KeyedVectors, word: str, topn: int = 10) -> None:
-    """Print the most similar words to a given Arabic word."""
+    # similar words for a given one
     if word not in wv:
         print(f"  [!] Word '{word}' not in vocabulary.")
         return
 
-    print(f"\n أقرب {topn} كلمات لـ '{word}':")
+    print(f"Top {topn} similar to {word} :")
     print("  " + "─" * 35)
     for w, score in wv.most_similar(word, topn=topn):
         bar = "█" * int(score * 20)
         print(f"  {w:20s}  {score:.4f}  {bar}")
+    return [{"word": w, "score": score} for w, score in wv.most_similar(word, topn=topn)]
 
 
 def word_analogy(wv: KeyedVectors, pos1: str, pos2: str, neg: str, topn: int = 5) -> None:
@@ -77,7 +78,7 @@ def run_demo(wv: KeyedVectors) -> None:
 
     # Pick the 4th most common word as demo (skip very common stopwords at 0-2)
     demo_words = list(wv.index_to_key)
-    demo_word  = demo_words[3] if len(demo_words) > 3 else demo_words[0]
+    demo_word = demo_words[3] if len(demo_words) > 3 else demo_words[0]
 
     # 1. Most similar
     most_similar(wv, demo_word, topn=8)
@@ -93,7 +94,8 @@ def run_demo(wv: KeyedVectors) -> None:
 
 # ── CLI ──────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Evaluate Arabic Word2Vec model")
+    parser = argparse.ArgumentParser(
+        description="Evaluate Arabic Word2Vec model")
     parser.add_argument("--vectors", type=str, default="models/arabic_vectors.kv",
                         help="Path to saved .kv vectors file")
     parser.add_argument("--word",    type=str, default=None,
