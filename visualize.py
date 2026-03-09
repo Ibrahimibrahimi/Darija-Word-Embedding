@@ -24,6 +24,7 @@ matplotlib.use("Agg")
 # Falls back to DejaVu Sans if none found.
 ARABIC_FONTS = ["Amiri", "Scheherazade New", "Arial Unicode MS", "DejaVu Sans"]
 
+
 def set_arabic_font():
     import matplotlib.font_manager as fm
     available = {f.name for f in fm.fontManager.ttflist}
@@ -37,9 +38,9 @@ def set_arabic_font():
 
 def plot_tsne(
     wv: KeyedVectors,
-    topn: int      = 150,
+    topn: int = 150,
     perplexity: int = 30,
-    out_path: str  = "outputs/tsne_arabic.png",
+    out_path: str = "outputs/tsne_arabic.png",
 ) -> None:
     """
     Run t-SNE on top-N word vectors and save a scatter plot.
@@ -54,20 +55,21 @@ def plot_tsne(
     print(f"[visualize] Font used: {font}")
 
     # ── Collect vectors ──────────────────────────────────────────
-    topn    = min(topn, len(wv))
-    words   = list(wv.index_to_key[:topn])
+    topn = min(topn, len(wv))
+    words = list(wv.index_to_key[:topn])
     vectors = np.array([wv[w] for w in words])
 
-    print(f"[visualize] Running t-SNE on {topn} words (dim={vectors.shape[1]})...")
+    print(
+        f"[visualize] Running t-SNE on {topn} words (dim={vectors.shape[1]})...")
 
     # ── t-SNE ────────────────────────────────────────────────────
     tsne = TSNE(
-        n_components = 2,
-        perplexity   = min(perplexity, topn - 1),
-        n_iter       = 1000,
-        random_state = 42,
-        init         = "pca",
-        learning_rate= "auto",
+        n_components=2,
+        perplexity=min(perplexity, topn - 1),
+        n_iter=1000,
+        random_state=42,
+        init="pca",
+        learning_rate="auto",
     )
     coords = tsne.fit_transform(vectors)
 
@@ -87,18 +89,18 @@ def plot_tsne(
     for i, word in enumerate(words):
         ax.annotate(
             word,
-            xy       = (coords[i, 0], coords[i, 1]),
-            fontsize = 7,
-            ha       = "right",
-            color    = "#e0e0e0",
-            alpha    = 0.85,
+            xy=(coords[i, 0], coords[i, 1]),
+            fontsize=7,
+            ha="right",
+            color="#e0e0e0",
+            alpha=0.85,
         )
 
     ax.set_title(
         "تمثيل الكلمات العربية — Word2Vec + t-SNE",
-        fontsize = 15,
-        color    = "white",
-        pad      = 15,
+        fontsize=15,
+        color="white",
+        pad=15,
     )
     ax.tick_params(colors="gray")
     for spine in ax.spines.values():
@@ -107,7 +109,8 @@ def plot_tsne(
     plt.tight_layout()
 
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
-    plt.savefig(out_path, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+    plt.savefig(out_path, dpi=150, bbox_inches="tight",
+                facecolor=fig.get_facecolor())
     plt.close()
 
     print(f"[visualize] ✓ Plot saved to '{out_path}'")
@@ -115,11 +118,16 @@ def plot_tsne(
 
 # ── CLI ──────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="t-SNE visualization of Arabic Word2Vec")
-    parser.add_argument("--vectors",    type=str, default="models/arabic_vectors.kv")
-    parser.add_argument("--topn",       type=int, default=150, help="Number of words to plot")
-    parser.add_argument("--perplexity", type=int, default=30,  help="t-SNE perplexity")
-    parser.add_argument("--out",        type=str, default="outputs/tsne_arabic.png")
+    parser = argparse.ArgumentParser(
+        description="t-SNE visualization of Arabic Word2Vec")
+    parser.add_argument("--vectors",    type=str,
+                        default="models/arabic_vectors.kv")
+    parser.add_argument("--topn",       type=int,
+                        default=150, help="Number of words to plot")
+    parser.add_argument("--perplexity", type=int,
+                        default=30,  help="t-SNE perplexity")
+    parser.add_argument("--out",        type=str,
+                        default="outputs/tsne_arabic.png")
     args = parser.parse_args()
 
     wv = KeyedVectors.load(args.vectors)
