@@ -45,6 +45,7 @@ def word_analogy(wv: KeyedVectors, pos1: str, pos2: str, neg: str, topn: int = 5
         return
 
     print(f"\n تشابه المتجهات: {pos1} - {neg} + {pos2} = ؟")
+    print(f"Vector Analogy : {pos1} - {neg} + {pos2} = ؟")
     print("  " + "─" * 35)
     results = wv.most_similar(positive=[pos1, pos2], negative=[neg], topn=topn)
     for w, score in results:
@@ -58,6 +59,7 @@ def word_similarity(wv: KeyedVectors, word1: str, word2: str) -> None:
         return
     score = wv.similarity(word1, word2)
     print(f"Similarity between {word1} and {word2} is : {score:.4f}")
+
 
 def doesnt_match(wv: KeyedVectors, words: list[str]) -> None:
     """Find the odd word that doesn't match in a given list"""
