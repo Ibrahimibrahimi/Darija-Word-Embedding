@@ -80,16 +80,9 @@ def tokenize(text: str, min_token_len: int = 2) -> list[str]:
 
 
 def load_corpus(filepath: str, min_sentence_len: int = 3) -> list[list[str]]:
-    """
-    Load a plain-text Arabic corpus (one sentence per line).
-    Returns a list of tokenized sentences.
-
-    Args:
-        filepath        : Path to .txt corpus file (UTF-8)
-        min_sentence_len: Skip sentences with fewer tokens than this
-
-    Returns:
-        List of token lists, e.g. [["الكتاب", "جميل"], ...]
+    """ 
+        + input = file path and length of sentence
+        + output = tokens
     """
     sentences = []
 
@@ -110,19 +103,3 @@ def load_corpus(filepath: str, min_sentence_len: int = 3) -> list[list[str]]:
         f"[preprocess] Loaded {len(sentences):,} sentences from '{filepath}'")
     print(f"[preprocess] Total tokens: {sum(len(s) for s in sentences):,}")
     return sentences
-
-
-# ── Quick test ───────────────────────────────────────────────────
-if __name__ == "__main__":
-    samples = [
-        "وَالْكِتَابُ الجَمِيلُ مَوجُودٌ عَلى الطَّاوِلَةِ.",
-        "الأطفال يلعبون في الحديقة الجميلة",
-        "مرحباً! كيف حالك؟ أتمنى أن تكون بخير.",
-    ]
-
-    print("=== Normalization Test ===")
-    for s in samples:
-        print(f"  Input : {s}")
-        print(f"  Output: {normalize_arabic(s)}")
-        print(f"  Tokens: {tokenize(s)}")
-        print()
