@@ -14,7 +14,7 @@ from tkinter import messagebox
 import re
 import os
 
-CORPUS_FILE = "./add Text from paste to file/corpus.txt"
+CORPUS_FILE = "tools/add Text from paste to file using GUI/corpus.txt"
 
 
 def clean_arabic(text: str) -> str:
