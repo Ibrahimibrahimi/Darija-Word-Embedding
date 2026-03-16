@@ -1,0 +1,9 @@
+{
+  "script": "Darija-Word-Embedding/train.py",
+  "corpus": "Darija-Word-Embedding/data/all.txt",
+  "size": 300,
+  "window": 5,
+  "epochs": 20,
+  "negative": 15,
+  "batch_size": 65536
+}
